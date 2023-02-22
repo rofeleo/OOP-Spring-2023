@@ -1,0 +1,10 @@
+C:/Users/ilya/Algorithms-Autumn-2022/anashkin_i_a/RationalNumbers/out/build/x64-debug/CMakeFiles/RationalNumbers.dir
+C:/Users/ilya/Algorithms-Autumn-2022/anashkin_i_a/RationalNumbers/out/build/x64-debug/CMakeFiles/edit_cache.dir
+C:/Users/ilya/Algorithms-Autumn-2022/anashkin_i_a/RationalNumbers/out/build/x64-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/ilya/Algorithms-Autumn-2022/anashkin_i_a/RationalNumbers/out/build/x64-debug/test/CMakeFiles/test.dir
+C:/Users/ilya/Algorithms-Autumn-2022/anashkin_i_a/RationalNumbers/out/build/x64-debug/test/CMakeFiles/edit_cache.dir
+C:/Users/ilya/Algorithms-Autumn-2022/anashkin_i_a/RationalNumbers/out/build/x64-debug/test/CMakeFiles/rebuild_cache.dir
+C:/Users/ilya/Algorithms-Autumn-2022/anashkin_i_a/RationalNumbers/out/build/x64-debug/lib/CMakeFiles/Rational.dir
+C:/Users/ilya/Algorithms-Autumn-2022/anashkin_i_a/RationalNumbers/out/build/x64-debug/lib/CMakeFiles/testlib.dir
+C:/Users/ilya/Algorithms-Autumn-2022/anashkin_i_a/RationalNumbers/out/build/x64-debug/lib/CMakeFiles/edit_cache.dir
+C:/Users/ilya/Algorithms-Autumn-2022/anashkin_i_a/RationalNumbers/out/build/x64-debug/lib/CMakeFiles/rebuild_cache.dir

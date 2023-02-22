@@ -1,0 +1,11 @@
+# ninja log v5
+1	551	6983335540314258	test/CMakeFiles/test.dir/test.cpp.obj	c8bc6749ade8f857
+2	767	6983332853895856	lib/CMakeFiles/Rational.dir/Rational.cpp.obj	1541114542d11927
+554	741	6983335541860756	test/test.exe	d8d7769247c9012f
+1	815	6983327159210457	lib/CMakeFiles/testlib.dir/Rational.cpp.obj	552ee2eca609bb6d
+744	941	6982526906946093	lib/testlib.exe	986ab3fe179184c3
+768	833	6983332854575780	lib/Rational.lib	51ce1d46de02f096
+2	1091	6983348484156144	test/CMakeFiles/test.dir/test.cpp.obj	c8bc6749ade8f857
+8	1097	6983348484206057	lib/CMakeFiles/Rational.dir/rational.cpp.obj	a0faf923ab216107
+1097	1181	6983348485046146	lib/Rational.lib	b517c3a5d94b5698
+1182	1383	6983348486716110	test/test.exe	d8d7769247c9012f
