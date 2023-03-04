@@ -1,8 +1,5 @@
+#pragma ONCE
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <iostream>
-#include "lib/Rational.hpp"
-
-bool TestParse(const std::string& str) {
-  std::istringstream istrm(str);
-  Rational q;
-  istrm >> q;
-  }
+#include <lib/rational.hpp>
+#include <doctest/doctest.h>
