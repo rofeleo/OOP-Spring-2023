@@ -18,13 +18,10 @@ find_package(doctest CONFIG REQUIRED)
 
 include_directories(.)
 
-add_executable (RationalNumbers "main.cpp")
-
 add_subdirectory(test)
 
 add_subdirectory(lib)
 
-set_property(TARGET RationalNumbers PROPERTY CXX_STANDARD 20)
 
 
 
