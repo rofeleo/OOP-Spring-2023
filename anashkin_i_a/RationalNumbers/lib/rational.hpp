@@ -11,6 +11,7 @@ class Rational {
 public:
   Rational() {}
   Rational(const int32_t m, const int32_t n);
+  Rational(const int32_t m);
   Rational(const Rational& rhs) = default;
   ~Rational() = default;
   bool operator==(const Rational& rhs) const { return (devider_ == rhs.devider_) && (devisible_ == rhs.devisible_); }
