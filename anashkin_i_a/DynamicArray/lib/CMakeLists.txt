@@ -1,0 +1,1 @@
+add_library(dynamic_array "dynamic_array.cpp" "dynamic_array.hpp")
