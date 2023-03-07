@@ -1,1 +1,0 @@
-add_library(Rational "rational.cpp" "rational.hpp")

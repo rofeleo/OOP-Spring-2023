@@ -18,9 +18,9 @@ find_package(doctest CONFIG REQUIRED)
 
 include_directories(.)
 
-add_subdirectory(test)
+add_subdirectory(prj.test)
 
-add_subdirectory(lib)
+add_subdirectory(prj.lab)
 
 
 
