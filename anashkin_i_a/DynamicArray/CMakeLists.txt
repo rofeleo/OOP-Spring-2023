@@ -15,9 +15,7 @@ cmake_minimum_required (VERSION 3.8)
 
 project ("DynamicArray")
 
-include_directories(.)
+add_subdirectory(prj.lab)
 
-add_subdirectory(lib)
-
-add_subdirectory(test)
+add_subdirectory(prj.test)
 
