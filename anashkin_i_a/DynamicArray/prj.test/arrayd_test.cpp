@@ -1,6 +1,11 @@
-#include "test_lib.hpp"
+#include <iostream>
+#include <algorithm>
+
+#include "arrayd/arrayd.hpp"
 
 int main() {
-  std::cout << 3;
+  ArrayD test(4);
+  test[3] = 2;
+  std::cout << test[3];
   return 0;
 }
