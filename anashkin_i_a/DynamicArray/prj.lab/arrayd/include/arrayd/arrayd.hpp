@@ -20,7 +20,7 @@ public:
 	std::ostream& write_to(std::ostream& ostrm) const noexcept;
 
 private:
-	double default_value_ = 0;
+	const double default_value_ = 0;
 	ptrdiff_t size_ = 0;
 	double* head_ = nullptr;
 };
