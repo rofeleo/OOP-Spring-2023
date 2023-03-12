@@ -14,13 +14,6 @@ int main() {
   std::cout << B << "\n";
   B.resize(2);
   std::cout << B;
-  try {
-    std::cout << B[-1];
-  }
-  catch (const std::out_of_range& ex) {
-    std::cerr << ex.what();
-    return 1;
-  }
 
   return 0;
 }
