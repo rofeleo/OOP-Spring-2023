@@ -16,10 +16,10 @@ ArrayD::ArrayD(const ArrayD& lhs) {
   }
 }
 
-void ArrayD::Reserve(const ptrdiff_t& capacity) {
+void ArrayD::Reserve(const ptrdiff_t& new_size) {
   const ArrayD tmp = *this;
   delete[] head_;
-  capacity_ = capacity;
+  capacity_ = new_size * capacity_ratio_;
   head_ = new double[capacity_];
   for (ptrdiff_t offset = 0; offset < tmp.Ssize(); offset += 1) {
     head_[offset] = tmp[offset];
@@ -28,7 +28,7 @@ void ArrayD::Reserve(const ptrdiff_t& capacity) {
 
 void ArrayD::Resize(const ptrdiff_t new_size) {
   if (new_size > capacity_) {
-    Reserve(new_size * 2);
+    Reserve(new_size);
   }
   if (new_size > n_objects_) {
     std::fill(head_ + n_objects_, head_ + new_size, default_value_);

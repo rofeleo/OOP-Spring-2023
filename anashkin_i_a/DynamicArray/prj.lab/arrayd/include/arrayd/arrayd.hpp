@@ -19,6 +19,7 @@ public:
 	std::ostream& write_to(std::ostream& ostrm) const noexcept;
 	void Insert(const ptrdiff_t& position, const double& rhs);
 private:
+	const ptrdiff_t capacity_ratio_ = 2;
 	void Reserve(const ptrdiff_t& capacity);
 	ptrdiff_t capacity_ = 2;
 	const double default_value_ = 0;
