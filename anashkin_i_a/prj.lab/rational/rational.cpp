@@ -62,11 +62,10 @@ std::istream& Rational::ReadFrom(std::istream& istrm) {
   char devide_;
   istrm >> m >> devide_ >> n;
   if (istrm.good()) {
-    if (Rational::devide_ == devide_) {
-      DevideByGcd(m, n);
-      devisible_ = m;
-      devider_ = n;
-    } else {
+    DevideByGcd(m, n);
+    devisible_ = m;
+    devider_ = n;
+    if (Rational::devide_ == devide_ || n <= 0) {
       istrm.setstate(std::ios_base::failbit);
     }
   }
