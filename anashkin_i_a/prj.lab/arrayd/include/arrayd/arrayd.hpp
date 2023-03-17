@@ -3,8 +3,7 @@
 #include <iostream>
 #include <string>
 
-class ArrayD
-{
+class ArrayD {
 public:
 	ArrayD() = default;
 	ArrayD(const ptrdiff_t size); 
