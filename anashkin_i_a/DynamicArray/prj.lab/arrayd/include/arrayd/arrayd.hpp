@@ -1,7 +1,6 @@
-#include <cstddef>
-// #include <iosfwd>
-#include <iostream>
 #include <algorithm>
+#include <cstddef>
+#include <iostream>
 #include <string>
 
 class ArrayD

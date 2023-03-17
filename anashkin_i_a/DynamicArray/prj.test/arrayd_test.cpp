@@ -12,7 +12,7 @@ int main() {
   std::cout << A << "\n";
   ArrayD B = A;
   std::cout << B << "\n";
-  B.resize(2);
+  B.Resize(2);
   std::cout << B;
 
   return 0;

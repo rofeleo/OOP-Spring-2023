@@ -1,16 +1,20 @@
 #include "arrayd/arrayd.hpp"
 
-ArrayD::ArrayD(const ptrdiff_t size) {
-  n_objects_ = size;
-  capacity_ = n_objects_ * 2;
+ArrayD::ArrayD(const ptrdiff_t size)
+  : n_objects_(size)
+  , capacity_(n_objects_ * 2) {
+  if (size < 0) {
+    throw(std::invalid_argument("size is less than zero"));
+  }
   head_ = new double[capacity_];
   std::fill(head_, head_ + n_objects_, default_value_);
 }
 
-ArrayD::ArrayD(const ArrayD& lhs) {
-  n_objects_ = lhs.n_objects_;
-  capacity_ = lhs.capacity_;
+ArrayD::ArrayD(const ArrayD& lhs)
+  : n_objects_(lhs.n_objects_)
+  , capacity_(lhs.capacity_) {
   head_ = new double[capacity_];
+  // std::copy
   for (ptrdiff_t offset = 0; offset < n_objects_; offset += 1) {
     head_[offset] = lhs.head_[offset];
   }
@@ -37,9 +41,12 @@ void ArrayD::Resize(const ptrdiff_t new_size) {
 }
 
 ArrayD& ArrayD::operator=(const ArrayD& lhs) {
-  this->Resize(lhs.Ssize());
-  for (ptrdiff_t offset = 0; offset < lhs.Ssize(); offset += 1) {
-    head_[offset] = lhs[offset];
+  if (this != &lhs) {
+    this->Resize(lhs.Ssize());
+    // std::copy
+    for (ptrdiff_t offset = 0; offset < lhs.Ssize(); offset += 1) {
+      head_[offset] = lhs[offset];
+    }
   }
   return *this;
 }
@@ -48,22 +55,19 @@ ArrayD::~ArrayD() {
   delete[] head_;
 }
 
-ptrdiff_t ArrayD::Ssize() const noexcept
-{
+ptrdiff_t ArrayD::Ssize() const noexcept {
   return n_objects_;
 }
 
-
-
 const double& ArrayD::operator[](const ptrdiff_t index) const {
-  if (0 > index || index >= n_objects_) {
+  if (0 > index || n_objects_ <= index) {
     throw std::out_of_range("index is out of range");
   }
   return head_[index];
 }
 
 double& ArrayD::operator[](const ptrdiff_t index) {
-  if (0 > index || index >= n_objects_) {
+  if (0 > index || n_objects_ <= index) {
     throw std::out_of_range("index is out of range");
   }
   return head_[index];
