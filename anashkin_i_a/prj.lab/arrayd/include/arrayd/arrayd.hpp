@@ -26,5 +26,4 @@ private:
 	double* head_ = nullptr;
 };
 
-
 std::ostream& operator<<(std::ostream& ostrm, const ArrayD& rhs) noexcept;

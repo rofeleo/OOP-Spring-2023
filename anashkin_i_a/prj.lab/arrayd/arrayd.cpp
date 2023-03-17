@@ -78,17 +78,23 @@ void ArrayD::Insert(const ptrdiff_t& position, const double& rhs) {
     throw(std::out_of_range("index is out of range"));
   }
   n_objects_ += 1;
-  if (position == n_objects_) {
-    head_[n_objects_ - 1] = rhs;
+  if (capacity_ == n_objects_) {
+    Reserve(n_objects_);
   }
-  
+  head_[n_objects_ - 1] = rhs;
+  for (ptrdiff_t i_arr = n_objects_ - 1; i_arr > position; i_arr -= 1) {
+    std::swap(head_[i_arr], head_[i_arr - 1]);
+  }
 }
 
 void ArrayD::Remove(const ptrdiff_t& position) {
   if (0 > position || n_objects_ <= position) {
     throw(std::out_of_range("index is out of range"));
   }
-
+  n_objects_ -= 1;
+  for (ptrdiff_t i_arr = position; i_arr < n_objects_; i_arr += 1) {
+    std::swap(head_[i_arr], head_[i_arr + 1]);
+  }
 }
 
 std::ostream& operator<<(std::ostream& ostrm, const ArrayD& rhs) noexcept {
