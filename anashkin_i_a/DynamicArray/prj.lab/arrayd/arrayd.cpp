@@ -81,6 +81,20 @@ std::ostream& ArrayD::write_to(std::ostream& ostrm) const noexcept {
   return ostrm;
 }
 
+void ArrayD::Insert(const ptrdiff_t& position, const double& rhs) {
+  if (0 > position || n_objects_ <= position) {
+    throw(std::out_of_range("index is out of range"));
+  }
+
+}
+
+void ArrayD::Remove(const ptrdiff_t& position) {
+  if (0 > position || n_objects_ <= position) {
+    throw(std::out_of_range("index is out of range"));
+  }
+
+}
+
 std::ostream& operator<<(std::ostream& ostrm, const ArrayD& rhs) noexcept {
   return rhs.write_to(ostrm);
 }
