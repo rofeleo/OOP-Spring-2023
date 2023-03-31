@@ -1,5 +1,5 @@
-add_executable(arrayd_test arrayd_test.cpp)
-add_executable(rational_test rational_test.cpp)
+add_executable(arrayd_test arrayd_test.cpp "arrayt_test.cpp")
+add_executable(rational_test rational_test.cpp "arrayt_test.cpp")
 target_link_libraries(rational_test rational doctest::doctest)
 target_link_libraries(arrayd_test arrayd doctest::doctest)
 add_test(NAME rational_test COMMAND rational_test)
