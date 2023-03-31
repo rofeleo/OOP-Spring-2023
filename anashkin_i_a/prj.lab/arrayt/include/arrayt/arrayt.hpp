@@ -1,3 +1,8 @@
+#pragma once
+#ifndef ARRAYT_HPP_31_03_2023
+#define ARRAYT_HPP_31_03_2023
+#endif 
+
 #include <algorithm>
 #include <cstddef>
 #include <iostream>
