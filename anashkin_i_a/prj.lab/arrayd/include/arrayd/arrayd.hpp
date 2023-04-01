@@ -23,10 +23,10 @@ public:
 	void Insert(const ptrdiff_t& position, const double& rhs);
 	void Remove(const ptrdiff_t& position);
 private:
-	const ptrdiff_t capacity_ratio_ = 2;
+	const ptrdiff_t kCapacityRatio_ = 2;
 	void Reserve(const ptrdiff_t& capacity);
 	ptrdiff_t capacity_ = 2;
-	const double default_value_ = 0;
+	const double kDefaultValue_ = 0;
 	ptrdiff_t n_objects_ = 0;
 	double* head_ = nullptr;
 };

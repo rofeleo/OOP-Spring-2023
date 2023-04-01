@@ -27,7 +27,7 @@ private:
 	const ptrdiff_t capacity_ratio_ = 2;
 	void Reserve(const ptrdiff_t& capacity);
 	ptrdiff_t capacity_ = 2;
-	const T default_value_ = T();
+	const T kDefaultValue_ = T();
 	ptrdiff_t n_objects_ = 0;
 	T* head_ = nullptr;
 };
@@ -44,7 +44,7 @@ ArrayT<T>::ArrayT(const ptrdiff_t size)
     throw(std::invalid_argument("size is less than zero"));
   }
   head_ = new T[capacity_];
-  std::fill(head_, head_ + n_objects_, default_value_);
+  std::fill(head_, head_ + n_objects_, kDefaultValue_);
 }
 
 template<class T>
@@ -70,7 +70,7 @@ void ArrayT<T>::Resize(const ptrdiff_t new_size) {
     Reserve(new_size);
   }
   if (new_size > n_objects_) {
-    std::fill(head_ + n_objects_, head_ + new_size, default_value_);
+    std::fill(head_ + n_objects_, head_ + new_size, kDefaultValue_);
   }
   n_objects_ = new_size;
 }
