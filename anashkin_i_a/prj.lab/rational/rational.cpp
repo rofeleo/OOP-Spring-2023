@@ -4,6 +4,16 @@ int32_t Rational::Gcd(const int32_t a, const int32_t b) const {
   return b ? Rational::Gcd(b, a % b) : a;
 }
 
+Rational operator/(const Rational& lhs, const Rational& rhs) {
+  Rational lhs_copy = lhs;
+  lhs_copy /= rhs;
+  return lhs_copy;
+}
+
+Rational Rational::operator-() const {
+  return Rational() - *this;
+}
+
 Rational::Rational(const int32_t m) {
   *this = Rational(m, 1);
 }
@@ -36,7 +46,7 @@ Rational& Rational::operator*=(const Rational& rhs) {
 }
 
 Rational& Rational::operator-=(const Rational& rhs) {
-  devisible_ = rhs.devisible_ * devider_ - devisible_ * rhs.devider_;
+  devisible_ = devisible_ * rhs.devider_ - rhs.devisible_ * devider_;
   devider_ *= rhs.devider_;
   DevideByGcd(devider_, devisible_);
   return *this;

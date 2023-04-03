@@ -24,7 +24,8 @@ public:
   Rational& operator*=(const int32_t& rhs) { return operator*=(Rational(rhs, 1)); }
   Rational& operator/=(const Rational& rhs);
   Rational& operator/=(const int32_t rhs) { return operator/=(Rational(rhs, 1)); }
-  std::ostream& WriteTo(std::ostream& ostrm) const;
+  Rational operator-() const;
+;  std::ostream& WriteTo(std::ostream& ostrm) const;
   std::istream& ReadFrom(std::istream& istrm);
 private:
   static const char devide_ = '/';
@@ -33,6 +34,8 @@ private:
   int32_t Gcd(int32_t a, int32_t b) const;
   void DevideByGcd(int32_t& lhs, int32_t& rhs);
 };
+
+Rational operator/(const Rational& lhs, const Rational& rhs);
 
 Rational operator+(const Rational& lhs, const Rational& rhs);
 
