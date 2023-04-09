@@ -26,7 +26,11 @@ public:
   Rational& operator/=(const Rational& rhs);
   Rational& operator/=(const int32_t rhs) { return operator/=(Rational(rhs, 1)); }
   Rational operator-() const;
-;  std::ostream& WriteTo(std::ostream& ostrm) const;
+  bool operator>(const Rational& rhs) const;
+  bool operator>=(const Rational& rhs) const;
+  bool operator<(const Rational & rhs) const;
+  bool operator<=(const Rational& rhs) const;
+  std::ostream& WriteTo(std::ostream& ostrm) const;
   std::istream& ReadFrom(std::istream& istrm);
 private:
   bool ParseToken(const std::string& part, int32_t& num_, int32_t& denum_); // return flag

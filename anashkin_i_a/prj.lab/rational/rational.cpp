@@ -18,6 +18,27 @@ bool Rational::ParseToken(const std::string& expr, int32_t& num_, int32_t& denum
   return 1;
 }
 
+
+std::istream& Rational::ReadFrom(std::istream& istrm) {
+  std::string token;
+  bool bad_inp = 0;
+  while (istrm >> token) {
+    if (!ParseToken(token, num_, denum_)) {
+      bad_inp = 1;
+    }
+    else {
+      DevideByGcd(num_, denum_);
+    }
+  }
+  if (bad_inp) {
+    istrm.clear(std::ios_base::failbit);
+  }
+  else {
+    istrm.clear(std::ios_base::eofbit);
+  }
+  return istrm;
+}
+
 Rational operator/(const Rational& lhs, const Rational& rhs) {
   Rational lhs_copy = lhs;
   lhs_copy /= rhs;
@@ -76,29 +97,26 @@ Rational& Rational::operator/=(const Rational& rhs) {
   return *this;
 }
 
+bool Rational::operator>(const Rational& rhs) const {
+  int32_t lcm = denum_  * rhs.denum_ / Gcd(denum_, num_);
+  return num_ * (lcm / denum_) > rhs.num_ * (lcm / rhs.denum_);
+};
+
+bool Rational::operator>=(const Rational& rhs) const {
+  return num_ == rhs.num_ || *this > rhs;
+};
+
+bool Rational::operator<(const Rational& rhs) const {
+  return !(*this >= rhs);
+};
+
+bool Rational::operator<=(const Rational& rhs) const {
+  return !(*this > rhs);
+};
+
 std::ostream& Rational::WriteTo(std::ostream& ostrm) const {
   ostrm << num_ << devide_ << denum_;
   return ostrm;
-}
-
-std::istream& Rational::ReadFrom(std::istream& istrm) {
-  std::string token;
-  bool bad_inp = 0;
-  while (istrm >> token) {
-    if (!ParseToken(token, num_, denum_)) {
-      bad_inp = 1;
-      std::clog << "-> " << token << " <-\n";
-    } else {
-      DevideByGcd(num_, denum_);
-    }
-  }
-  istrm.clear();
-  if (bad_inp) {
-    istrm.setstate(std::ios_base::failbit);
-  } else {
-    istrm.setstate(std::ios_base::eofbit);
-  }
-  return istrm;
 }
 
 void Rational::DevideByGcd(int32_t& lhs, int32_t& rhs) { 
