@@ -2,12 +2,12 @@
 
 ArrayD::ArrayD(const ptrdiff_t size)
   : n_objects_(size)
-  , capacity_(size * capacity_ratio_) {
+  , capacity_(size * kCapacityRatio_) {
   if (size < 0) {
     throw(std::invalid_argument("size is less than zero"));
   }
   head_ = new double[capacity_];
-  std::fill(head_, head_ + n_objects_, default_value_);
+  std::fill(head_, head_ + n_objects_, kDefaultValue_);
 }
 
 ArrayD::ArrayD(const ArrayD& lhs)
@@ -18,9 +18,9 @@ ArrayD::ArrayD(const ArrayD& lhs)
 }
 
 void ArrayD::Reserve(const ptrdiff_t& new_size) {
-  const ArrayD tmp = *this;
+  const ArrayD tmp(*this);
   delete[] head_;
-  capacity_ = new_size * capacity_ratio_;
+  capacity_ = new_size * kCapacityRatio_;
   head_ = new double[capacity_];
   std::copy(tmp.head_, tmp.head_ + tmp.Ssize(), head_);
 }
@@ -30,7 +30,7 @@ void ArrayD::Resize(const ptrdiff_t new_size) {
     Reserve(new_size);
   }
   if (new_size > n_objects_) {
-    std::fill(head_ + n_objects_, head_ + new_size, default_value_);
+    std::fill(head_ + n_objects_, head_ + new_size, kDefaultValue_);
   }
   n_objects_ = new_size;
 }
@@ -65,7 +65,7 @@ double& ArrayD::operator[](const ptrdiff_t index) {
   return head_[index];
 }
 
-std::ostream& ArrayD::write_to(std::ostream& ostrm) const noexcept {
+std::ostream& ArrayD::WriteTo(std::ostream& ostrm) const noexcept {
   ostrm << "size: " << Ssize() << "\n";
   for (ptrdiff_t i = 0; i < Ssize(); i += 1) {
     ostrm << head_[i] << " ";
@@ -98,5 +98,5 @@ void ArrayD::Remove(const ptrdiff_t& position) {
 }
 
 std::ostream& operator<<(std::ostream& ostrm, const ArrayD& rhs) noexcept {
-  return rhs.write_to(ostrm);
+  return rhs.WriteTo(ostrm);
 }

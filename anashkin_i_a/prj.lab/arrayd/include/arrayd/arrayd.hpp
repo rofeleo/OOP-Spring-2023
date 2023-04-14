@@ -11,20 +11,25 @@
 class ArrayD {
 public:
 	ArrayD() = default;
-	ArrayD(const ptrdiff_t size); 
-	ArrayD(const ArrayD& lhs);
+	explicit ArrayD(const ptrdiff_t size); 
+	explicit ArrayD(const ArrayD& lhs);
 	ArrayD& operator=(const ArrayD& lhs);
 	~ArrayD();
-	ptrdiff_t Ssize() const noexcept; 
 	double& operator[](const ptrdiff_t index);
-	const double& operator[](const ptrdiff_t index) const; 
+	const double& operator[](const ptrdiff_t index) const;
+
+public:
 	void Resize(const ptrdiff_t new_size);
-	std::ostream& write_to(std::ostream& ostrm) const noexcept;
 	void Insert(const ptrdiff_t& position, const double& rhs);
 	void Remove(const ptrdiff_t& position);
+	std::ostream& WriteTo(std::ostream& ostrm) const noexcept;
+	ptrdiff_t Ssize() const noexcept;
+
+private:
+	void Reserve(const ptrdiff_t& capacity);
+
 private:
 	const ptrdiff_t kCapacityRatio_ = 2;
-	void Reserve(const ptrdiff_t& capacity);
 	ptrdiff_t capacity_ = 2;
 	const double kDefaultValue_ = 0;
 	ptrdiff_t n_objects_ = 0;
