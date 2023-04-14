@@ -32,7 +32,8 @@ std::istream& Rational::ReadFrom(std::istream& istrm) {
   }
   if (istrm.good() || istrm.eof()) {
     if (Rational::devide_ == slash && denum > 0) {
-      *this = Rational(num, denum);
+      num_ = num;
+      denum_ = denum_;
     }
     else {
       istrm.setstate(std::ios_base::failbit);
