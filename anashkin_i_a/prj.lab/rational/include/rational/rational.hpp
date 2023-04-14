@@ -30,15 +30,20 @@ public:
   bool operator>=(const Rational& rhs) const;
   bool operator<(const Rational & rhs) const;
   bool operator<=(const Rational& rhs) const;
+
+public:
   std::ostream& WriteTo(std::ostream& ostrm) const;
   std::istream& ReadFrom(std::istream& istrm);
+
 private:
   bool ParseToken(const std::string& part, int32_t& num_, int32_t& denum_); // return flag
+  void DevideByGcd(int32_t& lhs, int32_t& rhs);
+
+private:
   static const char devide_ = '/';
   int32_t denum_ = 1;
   int32_t num_ = 0;
   int32_t Gcd(int32_t a, int32_t b) const;
-  void DevideByGcd(int32_t& lhs, int32_t& rhs);
 };
 
 Rational operator/(const Rational& lhs, const Rational& rhs);
