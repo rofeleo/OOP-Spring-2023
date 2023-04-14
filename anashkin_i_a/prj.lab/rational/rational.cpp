@@ -46,11 +46,12 @@ Rational operator/(const Rational& lhs, const Rational& rhs) {
 }
 
 Rational Rational::operator-() const {
-  return Rational() - *this;
+  return Rational(-num_, denum_);
 }
 
 Rational::Rational(const int32_t m) {
-  *this = Rational(m, 1);
+  num_ = m;
+  denum_ = 1;
 }
 
 Rational::Rational(const int32_t m, const int32_t n) {
@@ -103,15 +104,15 @@ bool Rational::operator>(const Rational& rhs) const {
 };
 
 bool Rational::operator>=(const Rational& rhs) const {
-  return num_ == rhs.num_ || *this > rhs;
+  return num_ == rhs.num_ || operator>(rhs);
 };
 
 bool Rational::operator<(const Rational& rhs) const {
-  return !(*this >= rhs);
+  return !operator>=(rhs);
 };
 
 bool Rational::operator<=(const Rational& rhs) const {
-  return !(*this > rhs);
+  return !operator>(rhs);
 };
 
 std::ostream& Rational::WriteTo(std::ostream& ostrm) const {
