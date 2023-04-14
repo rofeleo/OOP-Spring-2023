@@ -20,21 +20,23 @@ bool Rational::ParseToken(const std::string& expr, int32_t& num_, int32_t& denum
 
 
 std::istream& Rational::ReadFrom(std::istream& istrm) {
-  std::string token;
-  bool bad_inp = 0;
-  while (istrm >> token) {
-    if (!ParseToken(token, num_, denum_)) {
-      bad_inp = 1;
+  int num(0), denum(1);
+  char slash(0);
+  istrm >> num;
+  istrm.get(slash);
+  int trash = istrm.peek();
+  istrm >> denum;
+  if (!istrm || trash > '9' || trash < '0') {
+    istrm.setstate(std::ios_base::failbit);
+    return istrm;
+  }
+  if (istrm.good() || istrm.eof()) {
+    if (Rational::devide_ == slash && denum > 0) {
+      *this = Rational(num, denum);
     }
     else {
-      DevideByGcd(num_, denum_);
+      istrm.setstate(std::ios_base::failbit);
     }
-  }
-  if (bad_inp) {
-    istrm.clear(std::ios_base::failbit);
-  }
-  else {
-    istrm.clear(std::ios_base::eofbit);
   }
   return istrm;
 }
