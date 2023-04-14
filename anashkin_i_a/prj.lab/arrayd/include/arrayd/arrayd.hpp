@@ -22,7 +22,7 @@ public:
 	void Resize(const ptrdiff_t new_size);
 	void Insert(const ptrdiff_t& position, const double& rhs);
 	void Remove(const ptrdiff_t& position);
-	std::ostream& WriteTo(std::ostream& ostrm) const noexcept;
+	std::ostream& WriteTo(std::ostream& ostrm) const noexcept; // not in conversation
 	ptrdiff_t Ssize() const noexcept;
 
 private:

@@ -10,22 +10,28 @@
 
 template<class T>
 class ArrayT {
+
 public:
 	ArrayT() = default;
-	ArrayT(const ptrdiff_t size); 
-	ArrayT(const ArrayT& lhs);
-	ArrayT& operator=(const ArrayT& lhs);
 	~ArrayT();
-	ptrdiff_t Ssize() const noexcept; 
+	explicit ArrayT(const ptrdiff_t size); 
+	explicit ArrayT(const ArrayT& lhs);
+	ArrayT& operator=(const ArrayT& lhs);
 	T& operator[](const ptrdiff_t index);
 	const T& operator[](const ptrdiff_t index) const; 
+
+public:
+	std::ostream& WriteTo(std::ostream& ostrm) const noexcept;
+	ptrdiff_t Ssize() const noexcept; 
 	void Resize(const ptrdiff_t new_size);
-	std::ostream& write_to(std::ostream& ostrm) const noexcept;
 	void Insert(const ptrdiff_t& position, const T& rhs);
 	void Remove(const ptrdiff_t& position);
+
+private:
+	void Reserve(const ptrdiff_t& capacity);
+
 private:
 	const ptrdiff_t capacity_ratio_ = 2;
-	void Reserve(const ptrdiff_t& capacity);
 	ptrdiff_t capacity_ = 2;
 	const T kDefaultValue_ = T();
 	ptrdiff_t n_objects_ = 0;
@@ -57,7 +63,7 @@ ArrayT<T>::ArrayT(const ArrayT<T>& lhs)
 
 template<class T>
 void ArrayT<T>::Reserve(const ptrdiff_t& new_size) {
-  const ArrayT tmp = *this;
+  const ArrayT tmp(*this);
   delete[] head_;
   capacity_ = new_size * capacity_ratio_;
   head_ = new T[capacity_];
@@ -111,7 +117,7 @@ T& ArrayT<T>::operator[](const ptrdiff_t index) {
 }
 
 template<class T>
-std::ostream& ArrayT<T>::write_to(std::ostream& ostrm) const noexcept {
+std::ostream& ArrayT<T>::WriteTo(std::ostream& ostrm) const noexcept {
   ostrm << "size: " << Ssize() << "\n";
   for (ptrdiff_t i = 0; i < Ssize(); i += 1) {
     ostrm << head_[i] << " ";
@@ -147,5 +153,5 @@ void ArrayT<T>::Remove(const ptrdiff_t& position) {
 
 template<class T>
 std::ostream& operator<<(std::ostream& ostrm, const ArrayT<T>& rhs) noexcept {
-  return rhs.write_to(ostrm);
+  return rhs.WriteTo(ostrm);
 }
