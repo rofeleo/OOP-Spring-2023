@@ -17,7 +17,7 @@ public:
 	~ArrayD();
 	double& operator[](const ptrdiff_t index);
 	const double& operator[](const ptrdiff_t index) const;
-
+	
 public:
 	void resize(const ptrdiff_t new_size);
 	void insert(const ptrdiff_t& position, const double& rhs);

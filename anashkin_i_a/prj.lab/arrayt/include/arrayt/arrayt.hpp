@@ -21,11 +21,10 @@ public:
 	const T& operator[](const ptrdiff_t index) const; 
 
 public:
-	std::ostream& WriteTo(std::ostream& ostrm) const noexcept;
-	ptrdiff_t Ssize() const noexcept; 
-	void Resize(const ptrdiff_t new_size);
-	void Insert(const ptrdiff_t& position, const T& rhs);
-	void Remove(const ptrdiff_t& position);
+	ptrdiff_t ssize() const noexcept; 
+	void resize(const ptrdiff_t new_size);
+	void insert(const ptrdiff_t& position, const T& rhs);
+	void remove(const ptrdiff_t& position);
 
 private:
 	void Reserve(const ptrdiff_t& capacity);
@@ -37,10 +36,6 @@ private:
 	ptrdiff_t n_objects_ = 0;
 	T* head_ = nullptr;
 };
-
-template<class T>
-std::ostream& operator<<(std::ostream& ostrm, const ArrayT<T>& rhs) noexcept;
-
 
 template<class T>
 ArrayT<T>::ArrayT(const ptrdiff_t size)
@@ -67,11 +62,11 @@ void ArrayT<T>::Reserve(const ptrdiff_t& new_size) {
   delete[] head_;
   capacity_ = new_size * capacity_ratio_;
   head_ = new T[capacity_];
-  std::copy(tmp.head_, tmp.head_ + tmp.Ssize(), head_);
+  std::copy(tmp.head_, tmp.head_ + tmp.ssize(), head_);
 }
 
 template<class T>
-void ArrayT<T>::Resize(const ptrdiff_t new_size) {
+void ArrayT<T>::resize(const ptrdiff_t new_size) {
   if (new_size > capacity_) {
     Reserve(new_size);
   }
@@ -84,8 +79,8 @@ void ArrayT<T>::Resize(const ptrdiff_t new_size) {
 template<class T>
 ArrayT<T>& ArrayT<T>::operator=(const ArrayT<T>& lhs) {
   if (this != &lhs) {
-    this->Resize(lhs.Ssize());
-    std::copy(lhs.head_, lhs.head_ + lhs.Ssize(), this->head_);
+    this->resize(lhs.ssize());
+    std::copy(lhs.head_, lhs.head_ + lhs.ssize(), this->head_);
   }
   return *this;
 }
@@ -96,7 +91,7 @@ ArrayT<T>::~ArrayT() {
 }
 
 template<class T>
-ptrdiff_t ArrayT<T>::Ssize() const noexcept {
+ptrdiff_t ArrayT<T>::ssize() const noexcept {
   return n_objects_;
 }
 
@@ -117,16 +112,7 @@ T& ArrayT<T>::operator[](const ptrdiff_t index) {
 }
 
 template<class T>
-std::ostream& ArrayT<T>::WriteTo(std::ostream& ostrm) const noexcept {
-  ostrm << "size: " << Ssize() << "\n";
-  for (ptrdiff_t i = 0; i < Ssize(); i += 1) {
-    ostrm << head_[i] << " ";
-  }
-  return ostrm;
-}
-
-template<class T>
-void ArrayT<T>::Insert(const ptrdiff_t& position, const T& rhs) {
+void ArrayT<T>::insert(const ptrdiff_t& position, const T& rhs) {
   if (0 > position || n_objects_ <= position) {
     throw(std::out_of_range("index is out of range"));
   }
@@ -141,7 +127,7 @@ void ArrayT<T>::Insert(const ptrdiff_t& position, const T& rhs) {
 }
 
 template<class T>
-void ArrayT<T>::Remove(const ptrdiff_t& position) {
+void ArrayT<T>::remove(const ptrdiff_t& position) {
   if (0 > position || n_objects_ <= position) {
     throw(std::out_of_range("index is out of range"));
   }
@@ -149,9 +135,4 @@ void ArrayT<T>::Remove(const ptrdiff_t& position) {
   for (ptrdiff_t i_arr = position; i_arr < n_objects_; i_arr += 1) {
     std::swap(head_[i_arr], head_[i_arr + 1]);
   }
-}
-
-template<class T>
-std::ostream& operator<<(std::ostream& ostrm, const ArrayT<T>& rhs) noexcept {
-  return rhs.WriteTo(ostrm);
 }
