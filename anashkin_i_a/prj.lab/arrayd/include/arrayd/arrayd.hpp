@@ -19,14 +19,13 @@ public:
 	const double& operator[](const ptrdiff_t index) const;
 
 public:
-	void Resize(const ptrdiff_t new_size);
-	void Insert(const ptrdiff_t& position, const double& rhs);
-	void Remove(const ptrdiff_t& position);
-	std::ostream& WriteTo(std::ostream& ostrm) const noexcept; // not in conversation
-	ptrdiff_t Ssize() const noexcept;
+	void resize(const ptrdiff_t new_size);
+	void insert(const ptrdiff_t& position, const double& rhs);
+	void remove(const ptrdiff_t& position);
+	ptrdiff_t ssize() const noexcept;
 
 private:
-	void Reserve(const ptrdiff_t& capacity);
+	void reserve(const ptrdiff_t& capacity);
 
 private:
 	const ptrdiff_t kCapacityRatio_ = 2;
@@ -35,5 +34,3 @@ private:
 	ptrdiff_t n_objects_ = 0;
 	double* head_ = nullptr;
 };
-
-std::ostream& operator<<(std::ostream& ostrm, const ArrayD& rhs) noexcept;

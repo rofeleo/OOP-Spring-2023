@@ -17,17 +17,17 @@ ArrayD::ArrayD(const ArrayD& lhs)
   std::copy(lhs.head_, lhs.head_ + lhs.n_objects_, head_);
 }
 
-void ArrayD::Reserve(const ptrdiff_t& new_size) {
+void ArrayD::reserve(const ptrdiff_t& new_size) {
   const ArrayD tmp(*this);
   delete[] head_;
   capacity_ = new_size * kCapacityRatio_;
   head_ = new double[capacity_];
-  std::copy(tmp.head_, tmp.head_ + tmp.Ssize(), head_);
+  std::copy(tmp.head_, tmp.head_ + tmp.ssize(), head_);
 }
 
-void ArrayD::Resize(const ptrdiff_t new_size) {
+void ArrayD::resize(const ptrdiff_t new_size) {
   if (new_size > capacity_) {
-    Reserve(new_size);
+    reserve(new_size);
   }
   if (new_size > n_objects_) {
     std::fill(head_ + n_objects_, head_ + new_size, kDefaultValue_);
@@ -37,8 +37,8 @@ void ArrayD::Resize(const ptrdiff_t new_size) {
 
 ArrayD& ArrayD::operator=(const ArrayD& lhs) {
   if (this != &lhs) {
-    this->Resize(lhs.Ssize());
-    std::copy(lhs.head_, lhs.head_ + lhs.Ssize(), this->head_);
+    this->resize(lhs.ssize());
+    std::copy(lhs.head_, lhs.head_ + lhs.ssize(), this->head_);
   }
   return *this;
 }
@@ -47,7 +47,7 @@ ArrayD::~ArrayD() {
   delete[] head_;
 }
 
-ptrdiff_t ArrayD::Ssize() const noexcept {
+ptrdiff_t ArrayD::ssize() const noexcept {
   return n_objects_;
 }
 
@@ -65,21 +65,13 @@ double& ArrayD::operator[](const ptrdiff_t index) {
   return head_[index];
 }
 
-std::ostream& ArrayD::WriteTo(std::ostream& ostrm) const noexcept {
-  ostrm << "size: " << Ssize() << "\n";
-  for (ptrdiff_t i = 0; i < Ssize(); i += 1) {
-    ostrm << head_[i] << " ";
-  }
-  return ostrm;
-}
-
-void ArrayD::Insert(const ptrdiff_t& position, const double& rhs) {
+void ArrayD::insert(const ptrdiff_t& position, const double& rhs) {
   if (0 > position || n_objects_ <= position) {
     throw(std::out_of_range("index is out of range"));
   }
   n_objects_ += 1;
   if (capacity_ == n_objects_) {
-    Reserve(n_objects_);
+    reserve(n_objects_);
   }
   head_[n_objects_ - 1] = rhs;
   for (ptrdiff_t i_arr = n_objects_ - 1; i_arr > position; i_arr -= 1) {
@@ -87,7 +79,7 @@ void ArrayD::Insert(const ptrdiff_t& position, const double& rhs) {
   }
 }
 
-void ArrayD::Remove(const ptrdiff_t& position) {
+void ArrayD::remove(const ptrdiff_t& position) {
   if (0 > position || n_objects_ <= position) {
     throw(std::out_of_range("index is out of range"));
   }
@@ -95,8 +87,4 @@ void ArrayD::Remove(const ptrdiff_t& position) {
   for (ptrdiff_t i_arr = position; i_arr < n_objects_; i_arr += 1) {
     std::swap(head_[i_arr], head_[i_arr + 1]);
   }
-}
-
-std::ostream& operator<<(std::ostream& ostrm, const ArrayD& rhs) noexcept {
-  return rhs.WriteTo(ostrm);
 }
