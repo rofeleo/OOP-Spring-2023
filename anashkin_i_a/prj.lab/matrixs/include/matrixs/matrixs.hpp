@@ -1,10 +1,12 @@
 #include <tuple>
 #include <vector>
+#include <algorithm>
+
 
 class MatrixS {
 public:
   using SizeType = std::tuple<std::ptrdiff_t, std::ptrdiff_t>;
-
+  
 public:
   MatrixS() = default;
   explicit MatrixS(const SizeType& size = {0, 0});
