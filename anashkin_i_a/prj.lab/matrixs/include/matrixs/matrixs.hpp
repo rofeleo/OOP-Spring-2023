@@ -12,7 +12,7 @@ public:
   MatrixS() = default;
   explicit MatrixS(const SizeType& size = {0, 0});
   ~MatrixS();
-  MatrixS(const MatrixS& other);
+  explicit MatrixS(const MatrixS& other);
   MatrixS& operator=(const MatrixS& other);
 
 public:
@@ -26,8 +26,13 @@ public:
   std::ptrdiff_t nRows() const noexcept;
   std::ptrdiff_t nCols() const noexcept;
 
+
 private:
+  const int kCapacityRatio_ = 2;
   const int kDefaultValue_ = 0;
+
+private:
+  std::ptrdiff_t capacity_ = 0;
   std::ptrdiff_t n_rows_ = 0;
   std::ptrdiff_t n_cols_ = 0;
   int* nums_;
