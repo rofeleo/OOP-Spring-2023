@@ -1,6 +1,7 @@
 #include <tuple>
 #include <vector>
 #include <algorithm>
+#include <iostream>
 
 
 class MatrixS {
@@ -26,8 +27,9 @@ public:
   std::ptrdiff_t nCols() const noexcept;
 
 private:
+  const int kDefaultValue_ = 0;
   std::ptrdiff_t n_rows_ = 0;
   std::ptrdiff_t n_cols_ = 0;
-  std::vector<int> nums_;
-  std::vector<int*> p_first_elements_;
+  int* nums_;
+  std::vector<int*> p_first_element_;
 };
