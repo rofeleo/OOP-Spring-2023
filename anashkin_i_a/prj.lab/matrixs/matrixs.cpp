@@ -20,21 +20,20 @@ MatrixS::~MatrixS() {
   }
 }
 
-MatrixS::MatrixS(const MatrixS& other): // init. new matrix with the same capacity as the other matrix has.
+MatrixS::MatrixS(const MatrixS& other) :
   n_rows_(other.n_rows_),
   n_cols_(other.n_cols_),
-  capacity_(other.capacity_)
+  capacity_(other.n_rows_ * other.n_cols_ * kCapacityRatio_)
 {
-  p_first_element_.resize();
+  p_first_element_.resize(n_rows_ * kCapacityRowRatio_);
   nums_ = new int[capacity_];
-  std::copy(other.nums_, other.nums_ + capacity_, nums_);
   for (int i_row(0); i_row < n_rows_; i_row += 1) {
-      p_first_element_[i_row] = nums_ + n_cols_ * i_row;
+    p_first_element_[i_row] = nums_ + i_row * n_cols_ * kCapacityColRatio_;
+    std::copy(other.p_first_element_[i_row], other.p_first_element_[i_row] + other.n_cols_, p_first_element_[i_row]);
   }
 }
 
 MatrixS& MatrixS::operator=(const MatrixS& other) {
-  // TODO: add capacity
   if (this != &other) {
     if (capacity_ < other.n_cols_ * other.n_rows_) {
       delete[] nums_;
