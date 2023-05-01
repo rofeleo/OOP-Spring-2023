@@ -32,10 +32,10 @@ private:
   const int kDefaultValue_ = 0;
   const int kCapacityRowRatio_ = 2;
   const int kCapacityColRatio_ = 2;
-  const int kCapacityRatio_ = kCapacityColRatio_ * kCapacityRowRatio_;
 
 private:
-  std::ptrdiff_t capacity_ = 0;
+  std::ptrdiff_t capacity_row_ = 0;
+  std::ptrdiff_t capacity_col_ = 0;
   std::ptrdiff_t n_rows_ = 0;
   std::ptrdiff_t n_cols_ = 0;
   int* nums_;
