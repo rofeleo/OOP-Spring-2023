@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
+#include <cassert>
 
 
 class MatrixS {
@@ -28,8 +29,10 @@ public:
 
 
 private:
-  const int kCapacityRatio_ = 2;
   const int kDefaultValue_ = 0;
+  const int kCapacityRowRatio_ = 2;
+  const int kCapacityColRatio_ = 2;
+  const int kCapacityRatio_ = kCapacityColRatio_ * kCapacityRowRatio_;
 
 private:
   std::ptrdiff_t capacity_ = 0;

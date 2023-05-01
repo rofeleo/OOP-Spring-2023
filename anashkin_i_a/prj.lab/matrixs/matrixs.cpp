@@ -6,10 +6,10 @@ MatrixS::MatrixS(const SizeType& size) :
   capacity_(get<1>(size) * get<0>(size) * kCapacityRatio_)
 {
   nums_ = new int[capacity_];
-  p_first_element_.resize(capacity_);
-  std::fill(nums_, nums_ + n_cols_ * n_rows_, kDefaultValue_);
+  p_first_element_.resize(n_rows_ * kCapacityRowRatio_);
   for (int i_row(0); i_row < n_rows_; i_row += 1) {
-    p_first_element_[i_row] = nums_ + n_cols_ * i_row;
+    p_first_element_[i_row] = nums_ + i_row * n_cols_ * kCapacityColRatio_;
+    std::fill(p_first_element_[i_row], p_first_element_[i_row] + n_cols_, kDefaultValue_);
   }
 }
 
@@ -20,14 +20,14 @@ MatrixS::~MatrixS() {
   }
 }
 
-MatrixS::MatrixS(const MatrixS& other):
+MatrixS::MatrixS(const MatrixS& other): // init. new matrix with the same capacity as the other matrix has.
   n_rows_(other.n_rows_),
   n_cols_(other.n_cols_),
-  capacity_(other.n_rows_ * other.n_cols_ * kCapacityRatio_)
+  capacity_(other.capacity_)
 {
-  p_first_element_.resize(capacity_);
+  p_first_element_.resize();
   nums_ = new int[capacity_];
-  std::copy(other.nums_, other.nums_ + other.n_rows_ * other.n_cols_, nums_);
+  std::copy(other.nums_, other.nums_ + capacity_, nums_);
   for (int i_row(0); i_row < n_rows_; i_row += 1) {
       p_first_element_[i_row] = nums_ + n_cols_ * i_row;
   }
@@ -92,15 +92,13 @@ void MatrixS::resize(const std::ptrdiff_t i, const std::ptrdiff_t j) {
     delete[] nums_;
     capacity_ = i * j * kCapacityRatio_;
     nums_ = new int[capacity_];
+    std::copy(copy.nums_, copy.nums_ + copy.n_cols_ * copy.n_rows_, nums_);
     p_first_element_.resize(capacity_);
   } 
-
-
-
-    std::fill(copy.nums_, copy.nums_ + copy.n_cols_ * copy.n_cols_, nums_);
-    for (int i_row(0); i_row < n_rows_; i_row += 1) {
-      p_first_element_[i_row] = nums_ + n_cols_ * i_row;
-    }
+  //std::fill(nums_ + , nums_ + copy.n_cols_ * copy.n_cols_, nums_);
+  for (int i_row(0); i_row < n_rows_; i_row += 1) {
+    p_first_element_[i_row] = nums_ + n_cols_ * i_row;
+  }
 }
 
 const MatrixS::SizeType& MatrixS::ssize() const noexcept {
