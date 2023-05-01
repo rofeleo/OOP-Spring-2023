@@ -85,17 +85,17 @@ void MatrixS::resize(const SizeType& new_size) {
   
 }
 
-void MatrixS::resize(const std::ptrdiff_t i, const std::ptrdiff_t j) {
-  if (i < n_rows_) {
-    n_rows_ = i;
-  } else if (i > n_rows_) {
-    if (i >= capacity_row_) {
+void MatrixS::resize(const std::ptrdiff_t new_n_rows, const std::ptrdiff_t new_n_cols) {
+  if (new_n_rows < n_rows_) {
+    n_rows_ = new_n_rows;
+  } else if (new_n_rows > n_rows_) {
+    if (new_n_rows >= capacity_row_) {
 
     }
   }
-  if (j < n_cols_) {
-    n_cols_ = j;
-  } else if (j > n_rows_) {
+  if (new_n_cols < n_cols_) {
+    n_cols_ = new_n_cols;
+  } else if (new_n_cols > n_rows_) {
 
   }
 

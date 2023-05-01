@@ -22,7 +22,7 @@ public:
   int& at(const std::ptrdiff_t i, const std::ptrdiff_t j);
   const int& at(const std::ptrdiff_t i, const std::ptrdiff_t j) const;
   void resize(const SizeType& new_size);
-  void resize(const std::ptrdiff_t i, const std::ptrdiff_t j);
+  void resize(const std::ptrdiff_t new_n_rows, const std::ptrdiff_t new_n_cols);
   const SizeType& ssize() const noexcept;
   std::ptrdiff_t nRows() const noexcept;
   std::ptrdiff_t nCols() const noexcept;
