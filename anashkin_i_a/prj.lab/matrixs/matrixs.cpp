@@ -90,7 +90,14 @@ void MatrixS::resize(const std::ptrdiff_t new_n_rows, const std::ptrdiff_t new_n
     n_rows_ = new_n_rows;
   } else if (new_n_rows > n_rows_) {
     if (new_n_rows >= capacity_row_) {
-
+      capacity_row_ = new_n_rows * kCapacityRowRatio_;
+      MatrixS copy(*this);
+      delete[] nums_;
+      nums_ = new int[capacity_row_];
+      p_first_element_.resize(capacity_row_);
+      std::copy(copy.nums_, copy.nums_ + copy.capacity_col_ * copy.capacity_row_, nums_);
+      
+      // for (int i_row(copy.); )
     }
   }
   if (new_n_cols < n_cols_) {
