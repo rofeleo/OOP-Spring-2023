@@ -9,8 +9,8 @@ MatrixS::MatrixS(const SizeType& size) :
   nums_ = new int[capacity_col_ * capacity_row_];
   p_first_element_.resize(capacity_row_);
   for (int i_row(0); i_row < n_rows_; i_row += 1) {
-    p_first_element_[i_row] = nums_ + i_row * n_cols_ * kCapacityColRatio_;
-    std::fill(p_first_element_[i_row], p_first_element_[i_row] + n_cols_, kDefaultValue_);
+    p_first_element_[i_row] = nums_ + i_row * capacity_col_;
+    std::fill(p_first_element_[i_row], p_first_element_[i_row] + capacity_col_, kDefaultValue_);
   }
 }
 
@@ -22,14 +22,16 @@ MatrixS::~MatrixS() {
 }
 
 MatrixS::MatrixS(const MatrixS& other) :
+  capacity_row_(other.capacity_row_),
+  capacity_col_(other.capacity_col_),
   n_rows_(other.n_rows_),
   n_cols_(other.n_cols_)
 {
-  p_first_element_.resize(capacity_row_);
   nums_ = new int[capacity_col_ * capacity_row_];
-  for (int i_row(0); i_row < n_rows_; i_row += 1) {
-    p_first_element_[i_row] = nums_ + i_row * n_cols_ * kCapacityColRatio_;
-    std::copy(other.p_first_element_[i_row], other.p_first_element_[i_row] + other.n_cols_, p_first_element_[i_row]);
+  std::copy(other.nums_, other.nums_ + other.capacity_col_ * other.capacity_row_, nums_);
+  p_first_element_.resize(capacity_row_);
+  for (int i_row(0); i_row < capacity_row_; i_row += 1) {
+    p_first_element_[i_row] = nums_ + i_row * capacity_col_;
   }
 }
 
@@ -85,27 +87,32 @@ void MatrixS::resize(const SizeType& new_size) {
   
 }
 
-void MatrixS::resize(const std::ptrdiff_t new_n_rows, const std::ptrdiff_t new_n_cols) {
+void MatrixS::resize(std::ptrdiff_t new_n_rows, std::ptrdiff_t new_n_cols) {
   if (new_n_rows < n_rows_) {
     n_rows_ = new_n_rows;
   } else if (new_n_rows > n_rows_) {
     if (new_n_rows >= capacity_row_) {
-      capacity_row_ = new_n_rows * kCapacityRowRatio_;
       MatrixS copy(*this);
+      capacity_row_ = new_n_rows * kCapacityRowRatio_;
       delete[] nums_;
-      nums_ = new int[capacity_row_];
+      nums_ = new int[capacity_col_ * capacity_row_];
       p_first_element_.resize(capacity_row_);
       std::copy(copy.nums_, copy.nums_ + copy.capacity_col_ * copy.capacity_row_, nums_);
-      
-      // for (int i_row(copy.); )
+      for (int i_row(copy.n_rows_); i_row < new_n_cols; i_row += 1) {
+        p_first_element_[i_row] = nums_ + i_row * capacity_col_;
+        std::fill(p_first_element_[i_row], p_first_element_[i_row] + capacity_col_, kDefaultValue_);
+      }
     }
+    for (int i(0); i < capacity_col_ * capacity_row_; i += 1) {
+      std::cout << nums_[i] << " ";
+    }
+    std::cout << "\n";
   }
   if (new_n_cols < n_cols_) {
     n_cols_ = new_n_cols;
   } else if (new_n_cols > n_rows_) {
 
   }
-
 }
 
 const MatrixS::SizeType& MatrixS::ssize() const noexcept {

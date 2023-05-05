@@ -22,18 +22,15 @@ public:
   int& at(const std::ptrdiff_t i, const std::ptrdiff_t j);
   const int& at(const std::ptrdiff_t i, const std::ptrdiff_t j) const;
   void resize(const SizeType& new_size);
-  void resize(const std::ptrdiff_t new_n_rows, const std::ptrdiff_t new_n_cols);
+  void resize(std::ptrdiff_t new_n_rows, std::ptrdiff_t new_n_cols);
   const SizeType& ssize() const noexcept;
   std::ptrdiff_t nRows() const noexcept;
   std::ptrdiff_t nCols() const noexcept;
 
-
 private:
   const int kDefaultValue_ = 0;
-  const int kCapacityRowRatio_ = 2;
-  const int kCapacityColRatio_ = 2;
-
-private:
+  const int kCapacityRowRatio_ = 1;
+  const int kCapacityColRatio_ = 1;
   std::ptrdiff_t capacity_row_ = 0;
   std::ptrdiff_t capacity_col_ = 0;
   std::ptrdiff_t n_rows_ = 0;
