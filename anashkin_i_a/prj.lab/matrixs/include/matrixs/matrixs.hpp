@@ -1,7 +1,6 @@
 #include <tuple>
 #include <vector>
 #include <algorithm>
-#include <iostream>
 #include <cassert>
 
 
@@ -29,8 +28,8 @@ public:
 
 private:
   const int kDefaultValue_ = 0;
-  const int kCapacityRowRatio_ = 1;
-  const int kCapacityColRatio_ = 1;
+  const int kCapacityRowRatio_ = 2;
+  const int kCapacityColRatio_ = 2;
   std::ptrdiff_t capacity_row_ = 0;
   std::ptrdiff_t capacity_col_ = 0;
   std::ptrdiff_t n_rows_ = 0;
