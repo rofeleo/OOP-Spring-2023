@@ -1,7 +1,8 @@
-#include <tuple>
-#include <vector>
 #include <algorithm>
 #include <cassert>
+#include <stdexcept>
+#include <tuple>
+#include <vector>
 
 
 class MatrixS {

@@ -55,10 +55,16 @@ const int& MatrixS::at(const SizeType& elem) const {
 }
 
 int& MatrixS::at(const std::ptrdiff_t i, const std::ptrdiff_t j) {
+  if (i >= n_rows_ || i < 0 || j >= n_cols_ || j < 0) {
+    throw(std::out_of_range("Invalid index"));
+  }
   return *(p_first_element_[i] + j);
 }
 
 const int& MatrixS::at(const std::ptrdiff_t i, const std::ptrdiff_t j) const {
+  if (i >= n_rows_ || i < 0 || j >= n_cols_ || j < 0) {
+    throw(std::out_of_range("Invalid index"));
+  }
   return *(p_first_element_[i] + j);
 }
 
