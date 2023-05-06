@@ -7,6 +7,8 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <limits>
+
 
 class Rational {
 public:
@@ -15,7 +17,7 @@ public:
   explicit Rational(const int32_t m);
   Rational(const Rational& rhs) = default;
   ~Rational() = default;
-  bool operator==(const Rational& rhs) const { return (denum_ == rhs.denum_) && (num_ == rhs.num_); }
+  bool operator==(const Rational& rhs) const { return (denom_ == rhs.denom_) && (num_ == rhs.num_); }
   bool operator!=(const Rational& rhs) const { return !operator==(rhs); }
   Rational& operator+=(const Rational& rhs);
   Rational& operator+=(const int32_t rhs) { return operator+=(Rational(rhs, 1)); }
@@ -36,12 +38,11 @@ public:
   std::istream& ReadFrom(std::istream& istrm);
 
 private:
-  bool ParseToken(const std::string& part, int32_t& num_, int32_t& denum_); // return flag
   void DevideByGcd(int32_t& lhs, int32_t& rhs);
 
 private:
   static const char devide_ = '/';
-  int32_t denum_ = 1;
+  int32_t denom_ = 1;
   int32_t num_ = 0;
   int32_t Gcd(int32_t a, int32_t b) const;
 };

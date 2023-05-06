@@ -4,40 +4,27 @@ int32_t Rational::Gcd(const int32_t a, const int32_t b) const {
   return b ? Rational::Gcd(b, a % b) : a;
 }
 
-bool Rational::ParseToken(const std::string& expr, int32_t& num_, int32_t& denum_) {
-  std::string::const_iterator separator_pos = expr.end();
-  
-  for (auto i_symb = expr.begin(); i_symb != expr.end(); i_symb += 1) {
-    if (*i_symb == '/') {
-      if (separator_pos != expr.end() || i_symb == expr.begin() || i_symb == expr.end() - 1) return 0;
-      else separator_pos = i_symb;
-    } else if (!(*i_symb >= '0' && *i_symb <= '9' || *i_symb == '-')) return 0;
-  }
-  num_ = std::stoi(expr.substr(0, separator_pos - expr.begin()));
-  denum_ = std::stoi(expr.substr(separator_pos - expr.begin() + 1, expr.end() - separator_pos));
-  return 1;
-}
-
 
 std::istream& Rational::ReadFrom(std::istream& istrm) {
-  int num(0), denum(1);
-  char slash(0);
-  istrm >> num;
-  istrm.get(slash);
-  int trash = istrm.peek();
-  istrm >> denum;
-  if (!istrm || trash > '9' || trash < '0') {
-    istrm.setstate(std::ios_base::failbit);
-    return istrm;
-  }
-  if (istrm.good() || istrm.eof()) {
-    if (Rational::devide_ == slash && denum > 0) {
-      num_ = num;
-      denum_ = denum_;
+  constexpr auto max_size = std::numeric_limits<std::streamsize>::max();
+  int num, denom;
+  char slash('/');
+  int num_op(0);
+  for (;;) {
+    istrm >> num >> slash >> denom;
+    if (istrm.fail() || slash != devide_ || denom <= 0) {
+      istrm.clear();
+      if (num_op) {
+        istrm.setstate(std::ios_base::goodbit);
+      } else {
+        istrm.setstate(std::ios_base::failbit);
+      }
+      return istrm;
+    } else {
+      *this = Rational(num, denom);
     }
-    else {
-      istrm.setstate(std::ios_base::failbit);
-    }
+    if (istrm.eof() || static_cast<char>(istrm.peek()) != ' ') return istrm;
+    num_op += 1;
   }
   return istrm;
 }
@@ -49,45 +36,45 @@ Rational operator/(const Rational& lhs, const Rational& rhs) {
 }
 
 Rational Rational::operator-() const {
-  return Rational(-num_, denum_);
+  return Rational(-num_, denom_);
 }
 
 Rational::Rational(const int32_t m) {
   num_ = m;
-  denum_ = 1;
+  denom_ = 1;
 }
 
 Rational::Rational(const int32_t m, const int32_t n) {
   if (n == 0) {
-    throw std::invalid_argument("denum_ is equal to zero");
+    throw std::invalid_argument("denom_ is equal to zero");
   }
-  denum_ = n;
+  denom_ = n;
   num_ = m;
   if (n < 0) {
-    denum_ *= -1;
+    denom_ *= -1;
     num_ *= -1;
   }
-  DevideByGcd(num_, denum_);
+  DevideByGcd(num_, denom_);
 }
 
 Rational& Rational::operator+=(const Rational& rhs) {
-  num_ = rhs.num_ * denum_ + num_ * rhs.denum_;
-  denum_ *= rhs.denum_;
-  DevideByGcd(denum_, num_);
+  num_ = rhs.num_ * denom_ + num_ * rhs.denom_;
+  denom_ *= rhs.denom_;
+  DevideByGcd(denom_, num_);
   return *this;
 }
 
 Rational& Rational::operator*=(const Rational& rhs) {
-  denum_ *= rhs.denum_;
+  denom_ *= rhs.denom_;
   num_ *= rhs.num_;
-  DevideByGcd(denum_, num_);
+  DevideByGcd(denom_, num_);
   return *this;
 }
 
 Rational& Rational::operator-=(const Rational& rhs) {
-  num_ = num_ * rhs.denum_ - rhs.num_ * denum_;
-  denum_ *= rhs.denum_;
-  DevideByGcd(denum_, num_);
+  num_ = num_ * rhs.denom_ - rhs.num_ * denom_;
+  denom_ *= rhs.denom_;
+  DevideByGcd(denom_, num_);
   return *this;
 }
 
@@ -95,15 +82,15 @@ Rational& Rational::operator/=(const Rational& rhs) {
   if (0 == rhs.num_) {
     throw std::invalid_argument("devided by zero!");
   }
-  denum_ *= rhs.num_;
-  num_ *= rhs.denum_;
-  DevideByGcd(denum_, num_);
+  denom_ *= rhs.num_;
+  num_ *= rhs.denom_;
+  DevideByGcd(denom_, num_);
   return *this;
 }
 
 bool Rational::operator>(const Rational& rhs) const {
-  int32_t lcm = denum_  * rhs.denum_ / Gcd(denum_, num_);
-  return num_ * (lcm / denum_) > rhs.num_ * (lcm / rhs.denum_);
+  int32_t lcm = denom_  * rhs.denom_ / Gcd(denom_, num_);
+  return num_ * (lcm / denom_) > rhs.num_ * (lcm / rhs.denom_);
 };
 
 bool Rational::operator>=(const Rational& rhs) const {
@@ -119,7 +106,7 @@ bool Rational::operator<=(const Rational& rhs) const {
 };
 
 std::ostream& Rational::WriteTo(std::ostream& ostrm) const {
-  ostrm << num_ << devide_ << denum_;
+  ostrm << num_ << devide_ << denom_;
   return ostrm;
 }
 
