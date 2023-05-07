@@ -26,7 +26,7 @@ void ArrayD::reserve(const ptrdiff_t& new_size) {
 }
 
 void ArrayD::resize(const ptrdiff_t new_size) {
-  if (new_size > capacity_) {
+  if (new_size >= capacity_) {
     reserve(new_size);
   }
   if (new_size > n_objects_) {
@@ -38,7 +38,7 @@ void ArrayD::resize(const ptrdiff_t new_size) {
 ArrayD& ArrayD::operator=(const ArrayD& lhs) {
   if (this != &lhs) {
     this->resize(lhs.ssize());
-    std::copy(lhs.head_, lhs.head_ + lhs.ssize(), this->head_);
+    std::copy(lhs.head_, lhs.head_ + lhs.ssize(), head_);
   }
   return *this;
 }
