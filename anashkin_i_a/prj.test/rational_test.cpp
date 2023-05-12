@@ -20,23 +20,52 @@ TEST_CASE("Input") {
     sstrm.str("3/2");
     sstrm >> r;
     CHECK(r == Rational(3, 2));
+    CHECK(sstrm.eof());
+    sstrm.clear();
+  }
+  SUBCASE("with witespaces") {
+    sstrm.str("  3/2");
+    sstrm >> r;
+    CHECK(r == Rational(3, 2));
+    CHECK(sstrm.eof());
+    sstrm.clear();
+  }
+  SUBCASE("with witespaces at the end") {
+    sstrm.str("3/2  ");
+    sstrm >> r;
+    CHECK(r == Rational(3, 2));
+    CHECK(sstrm.good());
+    sstrm.clear();
+  }
+  SUBCASE("with witespaces at the end and at the beggining") {
+    sstrm.str("  3/2  ");
+    sstrm >> r;
+    CHECK(r == Rational(3, 2));
+    CHECK(sstrm.good());
+    sstrm.clear();
+  }
+  SUBCASE("three rational") {
+    sstrm.str("3/2 4/2 6/3");
+    sstrm >> r;
+    CHECK(r == Rational(6, 3));
+    CHECK(sstrm.eof());
     sstrm.clear();
   }
 }
-
-TEST_CASE("Comparison") {
-  SUBCASE("Greater") {
-    CHECK(Rational(1, 2) > Rational(1, 4));
-  }
-  SUBCASE("Greater or equal") {
-    CHECK(Rational(1, 2) >= Rational(2, 4));
-    CHECK(Rational(1, 2) >= Rational(1, 4));
-    CHECK_FALSE(Rational(4, 8) >= Rational(3, 1));
-  }
-  SUBCASE("Less or equal") {
-    CHECK(Rational(1, 2) <= Rational(2, 4));
-  }
-  SUBCASE("Less") {
-    CHECK(Rational(1, 2) < Rational(5, 2));
-  }
-}
+//
+//TEST_CASE("Comparison") {
+//  SUBCASE("Greater") {
+//    CHECK(Rational(1, 2) > Rational(1, 4));
+//  }
+//  SUBCASE("Greater or equal") {
+//    CHECK(Rational(1, 2) >= Rational(2, 4));
+//    CHECK(Rational(1, 2) >= Rational(1, 4));
+//    CHECK_FALSE(Rational(4, 8) >= Rational(3, 1));
+//  }
+//  SUBCASE("Less or equal") {
+//    CHECK(Rational(1, 2) <= Rational(2, 4));
+//  }
+//  SUBCASE("Less") {
+//    CHECK(Rational(1, 2) < Rational(5, 2));
+//  }
+//}

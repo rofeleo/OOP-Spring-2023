@@ -5,26 +5,21 @@
 
 #include <doctest/doctest.h>
 
-TEST_CASE("Custom") {
-  MatrixS test({ 2, 3 });
-  test.resize(4, 5);
-  //MatrixS testCopy(test);
-  //test.at({0, 0}) = 1;
-  //test.at(1, 2) = 54;
-  //test.at(0, 0) = 2;
-  //CHECK(test.at(1, 1) == 0);
-  /*for (int i = 0; i < 2; ++i) {
-    for (int j = 0; j < 3; ++j) {
-      std::cout << test.at(i, j) << " ";
-    }
-    std::cout << "\n";
-  }
-  std::cout << "\n";
-  for (int i = 0; i < 2; ++i) {
-    for (int j = 0; j < 3; ++j) {
-      std::cout << testCopy.at(i, j) << " ";
-    }
-    std::cout << "\n";
-  }*/
-
+TEST_CASE("All") {
+  MatrixS a({ 3, 4 });
+  a.resize({ 1, 1 });
+  CHECK_THROWS(a.at(0, 1));
+  CHECK_THROWS(a.at(1, 1));
+  CHECK_THROWS(a.at(1, 0));
+  a.at({ 0, 0 }) = 3;
+  CHECK(a.at(0, 0) == 3);
+  MatrixS b(a);
+  CHECK(b.at(0, 0) == 3);
+  a.at({ 0, 0 }) = 6;
+  CHECK(b.at(0, 0) == 3);
+  CHECK(a.at(0, 0) == 6);
+  a.resize(3, 4);
+  a.at(2, 3) = 7;
+  a.resize(5, 6);
+  CHECK(a.at(2, 3) == 7);
 }
