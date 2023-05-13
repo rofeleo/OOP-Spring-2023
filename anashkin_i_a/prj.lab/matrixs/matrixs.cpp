@@ -1,10 +1,10 @@
 #include "matrixs/matrixs.hpp"
 
 MatrixS::MatrixS(const SizeType& size) :
-  n_rows_(get<0>(size)),
-  capacity_row_(get<0>(size) * kCapacityRowRatio_),
-  n_cols_(get<1>(size)),
-  capacity_col_(get<1>(size) * kCapacityColRatio_)
+  n_rows_(std::get<0>(size)),
+  capacity_row_(std::get<0>(size) * kCapacityRowRatio_),
+  n_cols_(std::get<1>(size)),
+  capacity_col_(std::get<1>(size) * kCapacityColRatio_)
 {
   nums_ = new int[capacity_col_ * capacity_row_];
   std::fill(nums_, nums_ + capacity_col_ * capacity_row_, kDefaultValue_);
@@ -47,11 +47,11 @@ MatrixS& MatrixS::operator=(const MatrixS& other) {
 }
 
 int& MatrixS::at(const SizeType& elem) {
-  return at(get<0>(elem), get<1>(elem));
+  return at(std::get<0>(elem), std::get<1>(elem));
 }
 
 const int& MatrixS::at(const SizeType& elem) const {
-  return at(get<0>(elem), get<1>(elem));
+  return at(std::get<0>(elem), std::get<1>(elem));
 }
 
 int& MatrixS::at(const std::ptrdiff_t i, const std::ptrdiff_t j) {
@@ -69,7 +69,7 @@ const int& MatrixS::at(const std::ptrdiff_t i, const std::ptrdiff_t j) const {
 }
 
 void MatrixS::resize(const SizeType& new_size) {
-  resize(get<0>(new_size), get<1>(new_size));
+  resize(std::get<0>(new_size), std::get<1>(new_size));
 }
 
 void MatrixS::resize(std::ptrdiff_t new_n_rows, std::ptrdiff_t new_n_cols) {
