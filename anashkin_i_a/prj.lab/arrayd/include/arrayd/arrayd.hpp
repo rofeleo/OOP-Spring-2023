@@ -1,4 +1,3 @@
-#pragma once
 #ifndef ARRAYD_HPP_31_03_2023
 #define ARRAYD_HPP_31_03_2023
 #endif 

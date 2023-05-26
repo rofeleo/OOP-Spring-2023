@@ -1,3 +1,6 @@
+#ifndef MATRIX_HPP_26_05
+#define MATRIX_HPP_26_05
+#endif
 #include <algorithm>
 #include <cassert>
 #include <stdexcept>
