@@ -1,0 +1,12 @@
+add_library(color_transfer "color_transfer.cpp" "include/color_transfer/color_transfer.hpp")
+set_property(TARGET color_transfer PROPERTY CXX_STANDARD 20)
+target_include_directories(color_transfer PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+)
+
+target_link_libraries(color_transfer PUBLIC opencv_core opencv_imgproc opencv_imgcodecs opencv_highgui)
+
+
+install(TARGETS color_transfer DESTINATION lib)
+install(FILES include/color_transfer/color_transfer.hpp DESTINATION include)
