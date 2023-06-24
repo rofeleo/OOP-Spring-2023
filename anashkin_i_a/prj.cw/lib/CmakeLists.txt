@@ -6,7 +6,3 @@ target_include_directories(color_transfer PUBLIC
 )
 
 target_link_libraries(color_transfer PUBLIC opencv_core opencv_imgproc opencv_imgcodecs opencv_highgui)
-
-
-install(TARGETS color_transfer DESTINATION lib)
-install(FILES include/color_transfer/color_transfer.hpp DESTINATION include)
