@@ -29,5 +29,6 @@ add_custom_target(doc_doxygen ALL
 
 
 install(TARGETS test_app DESTINATION bin)
+
 install(DIRECTORY data DESTINATION .)  
 install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/rtf DESTINATION .)
